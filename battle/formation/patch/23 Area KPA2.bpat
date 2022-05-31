@@ -1,0 +1,10 @@
+% Bowser bosses battle script
+
+% Defense Table loaded when Hallway Bowser uses the Star Rod
+% JP behavior recreation: Stronger Star Shield
+% Changes: Increase Star Shield defense from 4 to 5
+@ $DefenseTable_80221510
+{
+    .Element:Normal 00000005
+    .Element:End
+}
