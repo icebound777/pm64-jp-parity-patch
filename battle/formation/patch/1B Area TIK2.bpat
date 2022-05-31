@@ -1,0 +1,110 @@
+% Blooper bosses battle script
+
+% Super Blooper Enraged Tackle attack script
+% JP behavior recreation: Weaker attack
+% Changes: Lower Enraged Tackle damage from 10` + 10` to 4` + 4`
+%          (changes marked by missing offsets at start of line)
+@ $Script_EnragedTackle
+{
+    0:  Call  UseIdleAnimation  ( .Actor:Self .False )
+   14:  Call  EnableIdleScript  ( .Actor:Self 00000000 )
+   28:  Call  SetTargetActor    ( .Actor:Self .Actor:Player )
+   3C:  Call  GetActorPos       ( .Actor:Player *Var0 *Var1 *Var2 )
+   58:  Set   *Var1  00000064
+   68:  Set   *Var3  0000000F
+   78:  ExecWait  $Script_8021EF60
+   84:  Call  PlaySoundAtActor  ( .Actor:Self 000003DD )
+   98:  Call  EnemyTestTarget   ( .Actor:Self *VarF ~Flags:DamageType:0 00000000 00000001 00000010 )
+   BC:  Switch  *VarF
+   C8:      CaseOR  ==  .HitResult:Miss % 6
+   D4:      CaseOR  ==  .HitResult:Lucky % 5
+   E0:          Thread
+   E8:              Set   *Var0  00000000
+   F8:              Loop  00000024
+  104:                  Add   *Var0  0000001E
+  114:                  Call  SetActorYaw   ( .Actor:Self *Var0 )
+  128:                  Wait  1`
+  134:              EndLoop
+  13C:              Call  SetActorYaw   ( .Actor:Self  0` )
+  150:          EndThread
+  158:          Call  SetAnimation  ( .Actor:Self 00000001 0050000D )
+  170:          Call  GetActorPos   ( .Actor:Player *Var0 *Var1 *Var2 )
+  18C:          Call  SetActorJumpGravity   ( .Actor:Self *Fixed[1.5] )
+  1A0:          Call  SetGoalPos    ( .Actor:Self *Var0 *Var1 *Var2 )
+  1BC:          Call  JumpToGoal    ( .Actor:Self  16` .False .True .False )
+  1DC:          ExecWait  $Script_80221E80
+  1E8:          If  *VarF  ==  00000005
+  1F8:              Call  EnemyTestTarget   ( .Actor:Self *VarF ~Flags:DamageType:TriggerLucky 00000000 00000000 00000000 )
+  21C:          EndIf
+  224:          Add   *Var0  0000001E
+  234:          Call  SetGoalPos    ( .Actor:Self *Var0 *Var1 *Var2 )
+  250:          Call  JumpToGoal    ( .Actor:Self  12` .False .True .False )
+  270:          Add   *Var0  00000014
+  280:          Call  SetGoalPos    ( .Actor:Self *Var0 *Var1 *Var2 )
+  29C:          Call  JumpToGoal    ( .Actor:Self  8` .False .True .False )
+  2BC:          ExecWait  $Script_8021F43C
+  2C8:          Call  EnableIdleScript  ( .Actor:Self FFFFFFFF )
+  2DC:          Call  UseIdleAnimation  ( .Actor:Self .True )
+  2F0:          Return
+  2F8:      EndCaseGroup
+  300:  EndSwitch
+  308:  Thread
+  310:      Set   *Var0  00000000
+  320:      Loop  00000010
+  32C:          Add   *Var0  0000001E
+  33C:          Call  SetActorYaw   ( .Actor:Self *Var0 )
+  350:          Wait  1`
+  35C:      EndLoop
+  364:      Call  SetActorYaw   ( .Actor:Self  0` )
+  378:  EndThread
+  380:  Call  SetAnimation  ( .Actor:Self 00000001 0050000D )
+  398:  Call  SetActorJumpGravity   ( .Actor:Self *Fixed[1.5] )
+  3AC:  Call  GetActorPos   ( .Actor:Player *Var0 *Var1 *Var2 )
+  3C8:  Add   *Var1  0000001E
+  3D8:  Call  SetGoalPos    ( .Actor:Self *Var0 *Var1 *Var2 )
+  3F4:  Call  JumpToGoal    ( .Actor:Self  16` .False .True .False )
+  414:  Call  GetStatusFlags        ( .Actor:Player *VarE )
+  428:  If  *VarE  &  ~Flags:StatusFlags:Stone % 100000
+  438:      Goto  0
+  444:  EndIf
+  44C:  Wait  2`
+        Call  EnemyDamageTarget ( .Actor:Self *VarF ~Flags:DamageType:0 00000000 00000000 00000004 00000040 )
+  480:  Call  GetPlayerHP       ( *VarE )
+  490:  If  *VarE  ==  00000000
+  4A0:      Goto  1
+  4AC:  EndIf
+  4B4:  Thread
+  4BC:      Set   *Var0  00000000
+  4CC:      Loop  00000014
+  4D8:          Add   *Var0  00000024
+  4E8:          Call  SetActorYaw   ( .Actor:Self *Var0 )
+  4FC:          Wait  1`
+  508:      EndLoop
+  510:      Call  SetActorYaw   ( .Actor:Self  0` )
+  524:  EndThread
+  52C:  Call  SetActorJumpGravity   ( .Actor:Self *Fixed[0.4] )
+  540:  Call  SetGoalPos        ( .Actor:Self *Var0 *Var1 *Var2 )
+  55C:  Call  JumpToGoal        ( .Actor:Self  20` .False .True .False )
+  57C:  Label  0
+  588:  Wait  2`
+        Call  EnemyDamageTarget ( .Actor:Self *VarF ~Flags:DamageType:0 00000000 00000000 00000004 00000020 )
+  5BC:  Label  1
+  5C8:  Call  GetStatusFlags    ( .Actor:Player *Var0 )
+  5DC:  If  *Var0  &  ~Flags:StatusFlags:Stone % 100000
+  5EC:      Call  SetAnimation  ( .Actor:Self 00000001 00500004 )
+  604:  Else
+  60C:      Call  SetAnimation  ( .Actor:Self 00000001 00500000 )
+  624:  EndIf
+  62C:  Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+  648:  Add   *Var0  0000001E
+  658:  Sub   *Var1  0000000F
+  668:  Call  SetActorJumpGravity   ( .Actor:Self *Fixed[1.2] )
+  67C:  Call  SetGoalPos        ( .Actor:Self *Var0 *Var1 *Var2 )
+  698:  Call  JumpToGoal        ( .Actor:Self  10` .False .True .False )
+  6B8:  ExecWait  $Script_80221E80
+  6C4:  ExecWait  $Script_8021F43C
+  6D0:  Call  EnableIdleScript  ( .Actor:Self FFFFFFFF )
+  6E4:  Call  UseIdleAnimation  ( .Actor:Self .True )
+  6F8:  Return
+  700:  End
+}
