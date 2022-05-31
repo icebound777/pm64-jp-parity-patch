@@ -1,0 +1,14 @@
+% Reflection Mimic Room
+
+% Exit LZ bind scripts
+% JP glitch recreation: Kooper Puzzle Skip
+% Ref: https://papermarioarchives.com/#/Kooper_Puzzle_Skip
+% Changes: Remove conditional bind for Loading Zone depending on Story Progress
+% Compare around US 0xD70800 to JP 0xD79C50
+@ $Script_80241E24
+{
+    0:  Bind  $Script_80241D24 .Trigger:WallPressA ~Collider:deilittsw 00000001 00000000
+   2C:  Bind  $Script_ExitWalk_80241DC8 .Trigger:FloorAbove ~Collider:deilise 00000001 00000000
+   50:  Return
+   58:  End
+}
