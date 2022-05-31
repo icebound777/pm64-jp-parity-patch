@@ -1,0 +1,21 @@
+# StarRod files
+/StarRod
+
+# ROM file and dump location
+/ROM
+
+# mod directories we do not care about
+/audio
+/battle
+/editor
+/image
+/map
+/out
+/res
+/sprite
+/strings
+/world
+
+# mod directories we partially care about
+/globals/*
+!/globals/patch
